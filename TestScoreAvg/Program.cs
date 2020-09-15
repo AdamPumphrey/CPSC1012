@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
-Purpose: Display test scores and average of all scores
-Input: score1, score2, score3
-Output: score1, score2, score3, averageScore
-Written By: Adam Pumphrey
-Last Modified: Sept. 15, 2020
+Purpose:        Display test scores and average of all scores
+Input:          score1, score2, score3
+Output:         score1, score2, score3, averageScore
+Written By:     Adam Pumphrey
+Last Modified:  Sept. 15, 2020
 */
 
 namespace TestScoreAvg
