@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
-Purpose: Practice arithmetic problems
-Input:
-Output:
-Written By: Adam Pumphrey
-Last Modified: Sept. 17, 2020
+Purpose:        Practice arithmetic problems
+Input:          number1, number2, number3, triHeight, triBase, threeDigitNum
+Output:         number1, number2, number3, numberAverage, triHeight, triBase, triHypotenuse, threeDigitNum, numSum
+Written By:     Adam Pumphrey
+Last Modified:  Sept. 17, 2020
 */
 
 namespace ArithmeticProblems
