@@ -30,8 +30,8 @@ namespace DecisionMakingProblems2
 
             bool valid = true;
 
-            // Initializing all to 0 since they are used in calulations
-            monthlyBill = additionalBill = totalBill = hours = additionalHours = 0;
+            // Initializing to 0 since they are used in calulations
+            hours = additionalHours = 0;
 
             Console.WriteLine("Select your plan:");
             Console.WriteLine("A. Package A");
