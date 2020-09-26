@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 /*
 Purpose: Decision making problems 1
-Input: numberInput, age, name, mark, taxIncome
-Output: grade, taxDue
+Input: numberInput, age, name, mark, taxIncome, gold, silver, bronze, time1, time2, time3
+Output: grade, taxDue, gold, silver, bronze
 Written By: Adam Pumphrey
 Last Modified: Sept. 24, 2020
 */
@@ -24,14 +24,21 @@ namespace DecisionMakingProblems1
                 mark;
 
             string name,
-                   grade;
+                   grade,
+                   gold,
+                   silver,
+                   bronze,
+                   temp;
 
             double taxIncome,
                    taxDue,
-                   amountOver;
+                   amountOver,
+                   time1,
+                   time2,
+                   time3;
 
             const double MaxTax = 0.09, MedTax = 0.07, MinTax = 0.05;
-
+            
             // 1.
             Console.Write("Enter a number: ");
             numberInput = int.Parse(Console.ReadLine());
@@ -118,6 +125,61 @@ namespace DecisionMakingProblems1
             }
 
             Console.WriteLine("Your income tax due is {0}", taxDue);
+            
+            // 5.
+            Console.Write("\nEnter the name of the first runner: ");
+            gold = Console.ReadLine();
+            Console.Write("Enter the time for the first runner: ");
+            time1 = double.Parse(Console.ReadLine());
+
+            Console.Write("\nEnter the name of the second runner: ");
+            silver = Console.ReadLine();
+            Console.Write("Enter the time for the second runner: ");
+            time2 = double.Parse(Console.ReadLine());
+
+            Console.Write("\nEnter the name of the third runner: ");
+            bronze = Console.ReadLine();
+            Console.Write("Enter the time for the third runner: ");
+            time3 = double.Parse(Console.ReadLine());
+
+            if (time2 < time1)
+            {
+                temp = gold;
+                gold = silver;
+                silver = temp;
+                if (time3 < time1)
+                {
+                    temp = silver;
+                    silver = bronze;
+                    bronze = temp;
+                    if (time3 < time2)
+                    {
+                        temp = gold;
+                        gold = silver;
+                        silver = temp;
+                    }
+                }
+            }
+            else if (time3 < time2)
+            {
+                temp = silver;
+                silver = bronze;
+                bronze = temp;
+                if (time3 < time1)
+                {
+                    temp = gold;
+                    gold = silver;
+                    silver = temp;
+                    if (time2 < time1)
+                    {
+                        temp = silver;
+                        silver = bronze;
+                        bronze = temp;
+                    }
+                }
+            }
+
+            Console.WriteLine("The order the runners finished in is: 1. {0} 2. {1} 3. {2}", gold, silver, bronze);
 
             Console.ReadLine();
         }
