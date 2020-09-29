@@ -18,10 +18,16 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
     {
         static void Main(string[] args)
         {
+            Console.Title = "Core1";
+            Console.Clear();
+
+            const double BasePrice = 500, TirePrice = 17.50, SteelPrice = 0, AluminumPrice = 175, TitaniumPrice = 425, CarbonPrice = 615, GST = 0.05;
+
             string asterisks,
                    dashes,
                    equals,
-                   name;
+                   name,
+                   brand;
 
             char option1,
                  greenOption;
@@ -29,7 +35,17 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
             int tireSize,
                 option2;
 
-            double greenAmount;
+            double greenAmount,
+                   tirePremium,
+                   metalPremium,
+                   subTotal,
+                   tax,
+                   total;
+
+            bool askAmount;
+
+            // Initialize greenAmount default as 0
+            greenAmount = 0;
 
             /* 
             https://stackoverflow.com/a/411762
@@ -57,8 +73,9 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
 
             /* 
             Validate menu input - I know it is not required, included because I wanted to.
-            I would usually use a loop to go back to the menu so the program doesn't just quit, 
+            I would usually use a while loop to go back to the menu so the program doesn't just quit, 
             but we haven't gone over loops yet.
+            Doesn't cover entering data types other than expected, would need to do that before Parse I think.
             */
             if (option1 != 'A' && option1 != 'B' && option1 != 'C' && option1 != 'D')
             {
@@ -100,14 +117,81 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                         {
                             Console.WriteLine("Invalid option.");
                         }
-                        else if (greenOption == 'y')
-                        {
-                            Console.Write("Amount: ");
-                            greenAmount = double.Parse(Console.ReadLine());
-                        }
                         else
                         {
-                            
+                            // Check for y option
+                            askAmount = greenOption == 'y' ? true : false;
+
+                            if (askAmount)
+                            {
+                                Console.Write("Amount: ");
+                                greenAmount = double.Parse(Console.ReadLine());
+                            }
+
+                            switch (option1)
+                            {
+                                case 'A':
+                                    brand = "Trek";
+                                    break;
+
+                                case 'B':
+                                    brand = "Giant";
+                                    break;
+
+                                case 'C':
+                                    brand = "Specialized";
+                                    break;
+
+                                case 'D':
+                                    brand = "Raleigh";
+                                    break;
+
+                                default:
+                                    brand = "error";
+                                    break;
+                            }
+
+                            switch (option2)
+                            {
+                                case 1:
+                                    metalPremium = SteelPrice;
+                                    break;
+
+                                case 2:
+                                    metalPremium = AluminumPrice;
+                                    break;
+
+                                case 3:
+                                    metalPremium = TitaniumPrice;
+                                    break;
+
+                                case 4:
+                                    metalPremium = CarbonPrice;
+                                    break;
+
+                                default:
+                                    metalPremium = 100000;
+                                    break;
+                            }
+
+                            tirePremium = tireSize * TirePrice;
+
+                            subTotal = BasePrice + tirePremium + metalPremium;
+                            tax = subTotal * GST;
+                            total = subTotal + tax + greenAmount;
+
+                            Console.WriteLine("Invoice and Packing Slip");
+                            Console.WriteLine("Customer: {0,8:c}", name);
+                            Console.WriteLine("Brand: {0,8:c}", brand);
+                            Console.WriteLine("Base Price: {0,8:c}", BasePrice);
+                            Console.WriteLine("Tire Size Premium: {0,8:c}", tirePremium);
+                            Console.WriteLine("Metal Selection Premium: {0,8:c}", metalPremium);
+                            Console.WriteLine("{0,8}", dashes);
+                            Console.WriteLine("Sub Total: {0,8:c}", subTotal);
+                            Console.WriteLine("GST: {0,8:c}", tax);
+                            Console.WriteLine("{0,8}", equals);
+                            Console.WriteLine("Donation to Green Earth {0,8:c}", greenAmount);
+                            Console.WriteLine("Total: {0,8:c}", total);
                         }
                     }
                 }
