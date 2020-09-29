@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
-Purpose: Show various litre conversions
-Input: option, pints, quarts, gallons
-Output: pints, quarts, gallons, litres
-Written By: Adam Pumphrey
-Last Modified: Sept. 29, 2020
+Purpose:            Show various litre conversions
+Input:              option, pints, quarts, gallons
+Output:             pints, quarts, gallons, litres
+Written By:         Adam Pumphrey
+Last Modified:      Sept. 29, 2020
 */
 
 namespace CPSC1012_Exercise03_AdamPumphrey
