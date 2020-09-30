@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
-Purpose:
-Input:
-Output:
-Written By: Adam Pumphrey
-Last Modified: Sept. 29, 2020
+Purpose:            To create a costed Packing Slip reflecting the choices made in purchasing a new bike
+Input:              name, option1, tireSize, option2, greenOption, greenAmount
+Output:             name, brand, BasePrice, tirePremium, metalPremium, subTotal, tax, greenAmount, total
+Written By:         Adam Pumphrey
+Last Modified:      Sept. 29, 2020
 */
 
 namespace CPSC1012_CorePortfolio1_AdamPumphrey
@@ -33,7 +33,9 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                  greenOption;
 
             int tireSize,
-                option2;
+                option2,
+                nameLen,
+                brandLen;
 
             double greenAmount,
                    tirePremium,
@@ -41,8 +43,6 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                    subTotal,
                    tax,
                    total;
-
-            bool askAmount;
 
             // Initialize greenAmount default as 0
             greenAmount = 0;
@@ -60,9 +60,11 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
             Console.WriteLine("    The Right Speed Bike Shop");
             Console.WriteLine("    {0}", asterisks);
 
-            Console.Write("Enter your name: ");
+            // Enter name
+            Console.Write("\nEnter your name: ");
             name = Console.ReadLine();
 
+            // Choose brand
             Console.WriteLine("Brand");
             Console.WriteLine("       a) Trek");
             Console.WriteLine("       b) Giant");
@@ -75,7 +77,6 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
             Validate menu input - I know it is not required, included because I wanted to.
             I would usually use a while loop to go back to the menu so the program doesn't just quit, 
             but we haven't gone over loops yet.
-            Doesn't cover entering data types other than expected, would need to do that before Parse I think.
             */
             if (option1 != 'A' && option1 != 'B' && option1 != 'C' && option1 != 'D')
             {
@@ -83,6 +84,7 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
             }
             else
             {
+                // Enter tire size
                 Console.Write("Enter a tire size [20-26] @ 17.50 per inch: ");
                 tireSize = int.Parse(Console.ReadLine());
 
@@ -93,6 +95,7 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                 }
                 else
                 {
+                    // Choose metal
                     Console.WriteLine("Enter the number of your corresponding choice of metal.");
                     Console.WriteLine("       1. Steel [$0]");
                     Console.WriteLine("       2. Aluminum [$175]");
@@ -101,18 +104,18 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                     Console.Write("Choice [1-4]: ");
                     option2 = int.Parse(Console.ReadLine());
 
-                    // Validate menu input
+                    // Validate menu input - doesn't cover entering data types other than expected, would need to do that before Parse I think
                     if (option2 > 4 || option2 < 1)
                     {
                         Console.WriteLine("Invalid option.");
                     }
                     else
                     {
+                        // Donation decision
                         Console.Write("Would you like to make a donation to the Green Earth Fund [y/n]: ");
                         greenOption = char.Parse(Console.ReadLine().ToLower());
 
                         // Validate y/n input
-
                         if (greenOption != 'y' && greenOption != 'n')
                         {
                             Console.WriteLine("Invalid option.");
@@ -120,14 +123,13 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                         else
                         {
                             // Check for y option
-                            askAmount = greenOption == 'y' ? true : false;
-
-                            if (askAmount)
+                            if (greenOption == 'y')
                             {
                                 Console.Write("Amount: ");
                                 greenAmount = double.Parse(Console.ReadLine());
                             }
 
+                            // Determine brand
                             switch (option1)
                             {
                                 case 'A':
@@ -151,6 +153,7 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                                     break;
                             }
 
+                            // Determine metal selection premium
                             switch (option2)
                             {
                                 case 1:
@@ -174,30 +177,39 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                                     break;
                             }
 
+                            // Calculate tirePremium
                             tirePremium = tireSize * TirePrice;
 
+                            // Calculate total
                             subTotal = BasePrice + tirePremium + metalPremium;
                             tax = subTotal * GST;
                             total = subTotal + tax + greenAmount;
 
-                            Console.WriteLine("Invoice and Packing Slip");
-                            Console.WriteLine("Customer: {0,8:c}", name);
-                            Console.WriteLine("Brand: {0,8:c}", brand);
-                            Console.WriteLine("Base Price: {0,8:c}", BasePrice);
-                            Console.WriteLine("Tire Size Premium: {0,8:c}", tirePremium);
-                            Console.WriteLine("Metal Selection Premium: {0,8:c}", metalPremium);
-                            Console.WriteLine("{0,8}", dashes);
-                            Console.WriteLine("Sub Total: {0,8:c}", subTotal);
-                            Console.WriteLine("GST: {0,8:c}", tax);
-                            Console.WriteLine("{0,8}", equals);
-                            Console.WriteLine("Donation to Green Earth {0,8:c}", greenAmount);
-                            Console.WriteLine("Total: {0,8:c}", total);
+                            /* 
+                            https://www.leniel.net/2012/08/string.format-composite-formatting-with-dynamic-length-aligned-text-in-csharp.html
+                            Dynamic string alignment method found in link above
+                            */
+                            nameLen = 16 + name.Length;
+                            brandLen = 19 + brand.Length;
+
+
+                            // Final formatting
+                            Console.WriteLine("\nInvoice and Packing Slip");
+                            Console.WriteLine("\n Customer:{0," + nameLen + "}", name);
+                            Console.WriteLine(" Brand:{0," + brandLen + "}", brand);
+                            Console.WriteLine(" Base Price: {0,33:0.00}", BasePrice);
+                            Console.WriteLine(" Tire Size Premium: {0,26:0.00}", tirePremium);
+                            Console.WriteLine(" Metal Selection Premium: {0,20:0.00}", metalPremium);
+                            Console.WriteLine("{0,46}", dashes);
+                            Console.WriteLine(" Sub Total: {0,34:0.00}", subTotal);
+                            Console.WriteLine(" GST: {0,40:0.00}", tax);
+                            Console.WriteLine("{0,46}", equals);
+                            Console.WriteLine(" Donation to Green Earth {0,21:0.00}", greenAmount);
+                            Console.WriteLine(" Total: {0,38:0.00}", total);
                         }
                     }
                 }
             }
-
-
             Console.ReadLine();
         }
     }
