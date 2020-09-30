@@ -9,7 +9,7 @@ Purpose:            To create a costed Packing Slip reflecting the choices made 
 Input:              name, option1, tireSize, option2, greenOption, greenAmount
 Output:             name, brand, BasePrice, tirePremium, metalPremium, subTotal, tax, greenAmount, total
 Written By:         Adam Pumphrey
-Last Modified:      Sept. 29, 2020
+Last Modified:      Sept. 30, 2020
 */
 
 namespace CPSC1012_CorePortfolio1_AdamPumphrey
@@ -21,7 +21,13 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
             Console.Title = "Core1";
             Console.Clear();
 
-            const double BasePrice = 500, TirePrice = 17.50, SteelPrice = 0, AluminumPrice = 175, TitaniumPrice = 425, CarbonPrice = 615, GST = 0.05;
+            const double BasePrice = 500, 
+                         TirePrice = 17.50, 
+                         SteelPrice = 0, 
+                         AluminumPrice = 175, 
+                         TitaniumPrice = 425, 
+                         CarbonPrice = 615, 
+                         GST = 0.05;
 
             string asterisks,
                    dashes,
@@ -120,15 +126,14 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                         {
                             Console.WriteLine("Invalid option.");
                         }
-                        else
+                        // to fulfill else if requirement
+                        else if (greenOption == 'y' || greenOption == 'n')
                         {
-                            // Check for y option
                             if (greenOption == 'y')
                             {
                                 Console.Write("Amount: ");
                                 greenAmount = double.Parse(Console.ReadLine());
                             }
-
                             // Determine brand
                             switch (option1)
                             {
@@ -197,15 +202,15 @@ namespace CPSC1012_CorePortfolio1_AdamPumphrey
                             Console.WriteLine("\nInvoice and Packing Slip");
                             Console.WriteLine("\n Customer:{0," + nameLen + "}", name);
                             Console.WriteLine(" Brand:{0," + brandLen + "}", brand);
-                            Console.WriteLine(" Base Price: {0,33:0.00}", BasePrice);
-                            Console.WriteLine(" Tire Size Premium: {0,26:0.00}", tirePremium);
+                            Console.WriteLine(" Base Price:              {0,20:0.00}", BasePrice);
+                            Console.WriteLine(" Tire Size Premium:       {0,20:0.00}", tirePremium);
                             Console.WriteLine(" Metal Selection Premium: {0,20:0.00}", metalPremium);
-                            Console.WriteLine("{0,46}", dashes);
-                            Console.WriteLine(" Sub Total: {0,34:0.00}", subTotal);
-                            Console.WriteLine(" GST: {0,40:0.00}", tax);
-                            Console.WriteLine("{0,46}", equals);
-                            Console.WriteLine(" Donation to Green Earth {0,21:0.00}", greenAmount);
-                            Console.WriteLine(" Total: {0,38:0.00}", total);
+                            Console.WriteLine("                          {0,20}", dashes);
+                            Console.WriteLine(" Sub Total:               {0,20:0.00}", subTotal);
+                            Console.WriteLine(" GST:                     {0,20:0.00}", tax);
+                            Console.WriteLine("                          {0,20}", equals);
+                            Console.WriteLine(" Donation to Green Earth  {0,20:0.00}", greenAmount);
+                            Console.WriteLine(" Total:                   {0,20:0.00}", total);
                         }
                     }
                 }
