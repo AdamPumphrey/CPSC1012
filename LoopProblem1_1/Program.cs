@@ -30,17 +30,40 @@ namespace LoopProblem1_1
             Console.Title = "Loop Problem 1 Q1";
             Console.Clear();
 
-            int mySquare,
-                    sumOfSquares,
-                    start = 1;
+            int mySquare = 0,
+                sumOfSquares,
+                start = 1;
 
-            char doAgain;
+            char doAgain = 'a';
+
+            bool isValid = false; //input validation
 
             do
             {
                 sumOfSquares = 0;
-                Console.Write("Enter the maximum value for the sum of squares: ");
-                mySquare = int.Parse(Console.ReadLine());
+                do
+                {
+                    Console.Write("Enter the maximum value for the sum of squares: ");
+                    //try-catch
+                    try
+                    {
+                        mySquare = int.Parse(Console.ReadLine());
+                        //trap range errors
+                        if (mySquare >= 0)
+                        {
+                            isValid = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input .. try again");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Invalid input .. try again");
+                    }
+                } while (!isValid);
+
 
                 //pre-test using while structure
                 //while (start <= mySquare)
@@ -57,8 +80,27 @@ namespace LoopProblem1_1
 
                 Console.WriteLine("Sum of squares to {0} is {1}", mySquare, sumOfSquares);
 
-                Console.Write("\nStop (Y)? ");
-                doAgain = char.Parse(Console.ReadLine().ToLower());
+                isValid = false;
+                do
+                {
+                    Console.Write("\nStop (Y)? ");
+                    try
+                    {
+                        doAgain = char.Parse(Console.ReadLine().ToLower());
+                        if (doAgain == 'y' || doAgain == 'n')
+                        {
+                            isValid = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input ... try again");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Invalid input ... try again");
+                    }
+                } while (!isValid);
 
             } while (doAgain != 'y');
 
