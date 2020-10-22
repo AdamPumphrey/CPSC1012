@@ -39,21 +39,19 @@ namespace MethodDemo_1
                 menuItem,
                 answer;
 
-            char doAgain = 'Y';
-
-            bool validMenuOption = false;
-
             //main program loop
             do
             {
-                do
-                {
                     DisplayMenu();
-                    menuItem = GetSafeInt("Enter your selection:", 0, 3);
-                    first = GetSafeInt("Enter a value for x:");
-                    second = GetSafeInt("Enter a value for y:");
-                } while (!validMenuOption);
-            } while (doAgain == 'Y');
+                    menuItem = GetSafeInt("Enter your selection:", MinValue, MaxValue);
+                    if (menuItem != 0)
+                    {
+                        first = GetSafeInt("Enter a value for x:");
+                        second = GetSafeInt("Enter a value for y:");
+                        answer = ProcessMenu(menuItem, first, second);
+                        DisplayResults(menuItem, answer, first, second);
+                    } 
+            } while (menuItem != 0);
 
             //program ends
             Console.WriteLine("\nGoodbye ...");
@@ -132,16 +130,31 @@ namespace MethodDemo_1
                     result = (int)Math.Pow(second, first);
                     break;
 
-                case 3:
-                    result = ((first * first) + (second * second));
-                    break;
-
                 default:
+                    result = ((first * first) + (second * second));
                     break;
                 
             }
 
             return result;
+        }
+
+        static void DisplayResults(int menuOption, int result, int first, int second)
+        {
+            switch (menuOption)
+            {
+                case 1:
+                    Console.WriteLine("{0}^{1} = {2}", first, second, result);
+                    break;
+
+                case 2:
+                    Console.WriteLine("{0}^{1} = {2}", second, first, result);
+                    break;
+
+                default:
+                    Console.WriteLine("{0}^2 + {1}^2 = {2}", first, second, result);
+                    break;
+            }
         }
     }//eoc
 }//eon
