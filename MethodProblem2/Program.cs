@@ -20,6 +20,7 @@ namespace MethodProblem2
 
         static void Main(string[] args)
         {
+            // Experimenting with tuples
             Tuple<int, int> firstAndSecond;
 
             int first,
@@ -170,6 +171,7 @@ namespace MethodProblem2
             }
         }
 
+        // Experimenting with tuples
         static Tuple<int, int> GetFirstAndSecond()
         {
             int first,
