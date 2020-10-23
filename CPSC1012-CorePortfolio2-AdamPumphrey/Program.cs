@@ -265,7 +265,14 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
             return number;
         }
 
-        static int GetSafeInt(string prompt)
+
+        /*
+          Optional param metal to indicate metal menu should be displayed on exception.
+          Necessary here since GetSafeInt is used in GetTireSize.
+          I could have overloaded this method instead and achieved the same goal (I think).
+          eg) GetSafeInt(string prompt) and GetSafeInt(string prompt, bool metal) or something like that
+        */
+        static int GetSafeInt(string prompt, bool metal = false)
         {
             bool isValid = false;
             int number = -99;
@@ -281,6 +288,10 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
                 catch (Exception)
                 {
                     Console.WriteLine("\nInvalid input .. please try again.");
+                    if (metal)
+                    {
+                        DisplayMetalMenu();
+                    }
                 }
             } while (!isValid);
 
@@ -324,13 +335,9 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
             do
             {
                 // display metal choice submenu
-                Console.WriteLine("\nEnter the number of your corresponding choice of metal.");
-                Console.WriteLine("       1. Steel [$0]");
-                Console.WriteLine("       2. Aluminum [$175]");
-                Console.WriteLine("       3. Titanium [$425]");
-                Console.WriteLine("       4. Carbon Fiber [$615]");
+                DisplayMetalMenu();
                 // validate int input
-                number = GetSafeInt("Choice [1-4]: ");
+                number = GetSafeInt("Choice [1-4]: ", true);
                 // check if valid int input is within range
                 if (number >= 1 && number <= 4)
                 {
@@ -344,6 +351,15 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
 
             // return metal type chosen by user
             return number;
+        }
+
+        static void DisplayMetalMenu()
+        {
+            Console.WriteLine("\nEnter the number of your corresponding choice of metal.");
+            Console.WriteLine("       1. Steel [$0]");
+            Console.WriteLine("       2. Aluminum [$175]");
+            Console.WriteLine("       3. Titanium [$425]");
+            Console.WriteLine("       4. Carbon Fiber [$615]");
         }
 
         static double GetDonationAmount()
@@ -369,6 +385,7 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
             return number;
         }
 
+        // did not add optional menu display param since there is no menu to display
         static double GetSafeDouble(string prompt)
         {
             bool isValid = false;
