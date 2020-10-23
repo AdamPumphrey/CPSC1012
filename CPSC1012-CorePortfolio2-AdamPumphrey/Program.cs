@@ -33,10 +33,12 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
             string name = "",
                    brand = "";
 
-            int tireSize = 0,
+            // default tireSize is 20 since 20 is lowest size
+            int tireSize = 20,
                 menuOption;
 
             double greenAmount = 0,
+                   // default metalPremium is 0 since lowest premium is $0 (steel)
                    metalPremium = 0;
 
             menuOption = 0;
@@ -84,11 +86,11 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
 
                         // 7. Clear
                         default:
-                            // reset stored values
+                            // reset stored values to defaults
                             name = "";
                             brand = "";
                             metalPremium = 0;
-                            tireSize = 0;
+                            tireSize = 20;
                             greenAmount = 0;
                             Console.WriteLine("\nData cleared.");
                             break;
@@ -97,7 +99,7 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
             // run until '8. Exit' is chosen
             } while (menuOption != 8);
 
-            Console.WriteLine("Closing program...");
+            Console.WriteLine("\nClosing program...");
 
             Console.ReadLine();
         }
@@ -175,18 +177,14 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
         {
             char choice;
             bool isValid = false;
-            // char array of valid options to choose from
-            char[] validOptions = { 'A', 'B', 'C', 'D' };
+            // char list of valid options to choose from
+            List<char> validOptions = new List<char> { 'A', 'B', 'C', 'D' };
             do
             {
                 // display brand submenu
-                Console.WriteLine("\nBrand");
-                Console.WriteLine("       a) Trek");
-                Console.WriteLine("       b) Giant");
-                Console.WriteLine("       c) Specialized");
-                Console.WriteLine("       d) Raleigh");
+                DisplayBrandMenu();
                 // validate char input
-                choice = GetSafeChar("Make a selection [a,b,c,d]: ");
+                choice = GetSafeChar("Make a selection [a,b,c,d]: ", true);
                 // check if validated char input is a valid option
                 if (validOptions.Contains(choice))
                 {
@@ -202,7 +200,22 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
             return choice;
         }
 
-        static char GetSafeChar(string prompt)
+        static void DisplayBrandMenu()
+        {
+            // display brand submenu
+            Console.WriteLine("\nBrand");
+            Console.WriteLine("       a) Trek");
+            Console.WriteLine("       b) Giant");
+            Console.WriteLine("       c) Specialized");
+            Console.WriteLine("       d) Raleigh");
+        }
+
+        /* Optional param brand to indicate call of DisplayBrandMenu.
+           Not really necessary since this function is only being called for the brand selection,
+           but would allow the function to be called for other uses if this code was expanded upon 
+           in the future rather than having it hard coded for the brand choice.
+        */
+        static char GetSafeChar(string prompt, bool brand = false)
         {
             bool isValid = false;
             char character = '.';
@@ -217,8 +230,11 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
                 }
                 catch (Exception)
                 {
-
                     Console.WriteLine("\nInvalid input .. please try again.");
+                    if (brand)
+                    {
+                        DisplayBrandMenu();
+                    }
                 }
             } while (!isValid);
 
