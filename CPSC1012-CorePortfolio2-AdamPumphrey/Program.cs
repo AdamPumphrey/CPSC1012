@@ -31,9 +31,8 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
             Console.Clear();
 
             string name = "",
-                   brand = "";
+                   brand = "Trek";
 
-            // default tireSize is 20 since 20 is lowest size
             int tireSize = 20,
                 menuOption;
 
@@ -88,7 +87,7 @@ namespace CPSC1012_CorePortfolio2_AdamPumphrey
                         default:
                             // reset stored values to defaults
                             name = "";
-                            brand = "";
+                            brand = "Trek";
                             metalPremium = 0;
                             tireSize = 20;
                             greenAmount = 0;
