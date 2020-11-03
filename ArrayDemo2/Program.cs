@@ -35,16 +35,32 @@ namespace ArrayDemo2
             Setup();
 
             //declare constants and variables
-            int firstLocation;
+            int firstLocation,
+                searchNumber;
             bool found;
             int count;
+            string searchName;
 
             //Load the arrays
             int[] grades = { 42, 50, 36, 50, 88 };
+            string[] names = { "Allan", "Sally", "Doug", "George", "Stanley", "Zack", "Fred", "Betty", "Henry", "Donald" };
+
+            searchNumber = GetSafeInt("Enter a number to search for: ");
+            searchName = GetSafeString("Enter the name to search for: ");
 
             //Search the array for a mark using each of the search algorithms
             //1. First location
-            firstLocation = SearchArrayIndex(grades, grades.Length, 50);
+            firstLocation = SearchArrayIndex(grades, grades.Length, searchNumber);
+            if (firstLocation >= 0)
+            {
+                Console.WriteLine("First location is at index = {0}", firstLocation);
+            }
+            else
+            {
+                Console.WriteLine("Not found");
+            }
+            // string search
+            firstLocation = SearchArrayIndex(names, names.Length, searchName);
             if (firstLocation >= 0)
             {
                 Console.WriteLine("First location is at index = {0}", firstLocation);
@@ -55,23 +71,37 @@ namespace ArrayDemo2
             }
 
             //1.b Count search
-            count = SearchArrayCount(grades, grades.Length, 50);
+            count = SearchArrayCount(grades, grades.Length, searchNumber);
+            Console.WriteLine("The item appears {0} times", count);
+            //string search
+            count = SearchArrayCount(names, names.Length, searchName);
             Console.WriteLine("The item appears {0} times", count);
 
             //1.c Boolean search
-            found = SearchArrayBoolean(grades, grades.Length, 50);
+            found = SearchArrayBoolean(grades, grades.Length, searchNumber);
+            Console.WriteLine(found);
+            //string search
+            found = SearchArrayBoolean(names, names.Length, searchName);
             Console.WriteLine(found);
 
 
             //Search the array for a name using each of the search algorithms
 
 
+            DisplayArray(grades, grades.Length); //unsorted
             //Sort the array(s)
-
+            SelectionSort(grades, grades.Length); //sorted
 
             //Display the array(s)
+            Console.WriteLine("\nSorted:");
             DisplayArray(grades, grades.Length);
 
+            Console.WriteLine("\nString arrays");
+            DisplayArray(names, names.Length);//unsorted
+            SelectionSort(names, names.Length);
+            Console.WriteLine("\nSorted");
+            DisplayArray(names, names.Length);
+ 
             Console.ReadLine();
         }//eom
 
@@ -91,6 +121,20 @@ namespace ArrayDemo2
             return found;
         }//end of SearchArrayBoolean
 
+        static bool SearchArrayBoolean(string[] names, int size, string searchName)
+        {
+            bool found = false;
+            for (int index = 0; index < size; index++)
+            {
+                if (searchName.ToLower().Equals(names[index].ToLower()))
+                {
+                    found = true;
+                    index = size;
+                }
+            }
+            return found;
+        }
+
         //This search algorith return the index location of the first location in the array of the search item
         static int SearchArrayIndex(int[] grades, int size, int searchValue)
         {
@@ -105,6 +149,22 @@ namespace ArrayDemo2
             }
             return location;
         }//end of SearchArrayIndex
+
+        //This search algorith return the index location of the first location in the array of the search item
+        static int SearchArrayIndex(string[] names, int size, string searchName)
+        {
+            int location = -1; // -1 is not a valid index in C#
+            for (int index = 0; index < size; index++)
+            {
+                if (searchName.ToLower().Equals(names[index].ToLower()))
+                {
+                    location = index;
+                    index = size;
+                }
+            }
+            return location;
+        }//end of SearchArrayIndex
+
 
         //This search algorith returns the count of all search items, or can be modified to return
         //  a count of a specific range of values inn the array
@@ -121,12 +181,33 @@ namespace ArrayDemo2
             return count;
         }//end of SearchArrayCount
 
+        static int SearchArrayCount(string[] names, int size, string searchName)
+        {
+            int count = 0;
+            for (int index = 0; index < size; index++)
+            {
+                if (searchName.ToLower().Equals(names[index].ToLower()))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }//end of SearchArrayCount
+
         //This method displays a formatted output of the array data
         static void DisplayArray(int[] grades, int size)
         {
             for(int index = 0; index < size; index++)
             {
                 Console.WriteLine("Index[{0}] has a grade of {1}", index, grades[index]);
+            }
+        }//end of DisplayArray
+
+        static void DisplayArray(string[] names, int size)
+        {
+            for (int index = 0; index < size; index++)
+            {
+                Console.WriteLine("Index[{0}] has a grade of {1}", index, names[index]);
             }
         }//end of DisplayArray
 
@@ -156,6 +237,34 @@ namespace ArrayDemo2
                 }//end inner for
             }//end outer for
         }//end of SelectionSort
+
+        static void SelectionSort(string[] names, int size)
+        {
+            int minIndex;
+            string minValue,
+                    temp;
+
+            for (int startScan = 0; startScan < size - 1; startScan++)
+            {
+                //assume, for now, the first element has the smallest value
+                minIndex = startScan;
+                minValue = names[startScan];
+                //now look at the rest of the array
+                for (int index = startScan; index < size; index++)
+                {
+                    if (names[index].CompareTo(minValue) < 0)
+                    {
+                        minValue = names[index];
+                        minIndex = index;
+                        //now swap
+                        temp = names[minIndex];
+                        names[minIndex] = names[startScan];
+                        names[startScan] = temp;
+                    }//end if
+                }//end inner for
+            }//end outer for
+        }//end of SelectionSort
+
         #endregion
 
         #region Provided Methods - DO NOT MODIFY!
@@ -200,7 +309,7 @@ namespace ArrayDemo2
             string name;
             do
             {
-                Console.Write("Enter yourn name: ");
+                Console.Write(prompt);
                 name = Console.ReadLine();
                 if (name.Length > 0) //the 0 represents 1 value less than the minuimum required for the length
                 {
