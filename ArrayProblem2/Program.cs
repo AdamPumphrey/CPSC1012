@@ -28,7 +28,7 @@ namespace ArrayProblem2
 
             List<int> indices = new List<int> { };
 
-            fillArray(names);
+            FillArray(names);
 
             searchOption = GetSafeChar("\nEnter 'y' to search, 'n' to exit: ");
 
@@ -36,12 +36,12 @@ namespace ArrayProblem2
             {
                 do
                 {
-                    searchItem = GetSafeString("\nEnter a name to search for: ");
+                    searchItem = GetSafeString("\nEnter a name to search for (or done to exit): ");
                     // StringComparison.CurrentCultureIgnoreCase performs case insensitive comparison
                     if (!searchItem.Equals("done", StringComparison.CurrentCultureIgnoreCase))
                     {
                         // obtain indices where item is found in names array
-                        searchArray(names, searchItem, indices);
+                        SearchArray(names, searchItem, indices);
 
                         // if item is found more than once
                         if (indices.Count > 1)
@@ -64,6 +64,7 @@ namespace ArrayProblem2
                             Console.WriteLine("\n" + searchItem.ToLower() + " is not found in the names list");
                         }
 
+                        indices.Clear();
                         Console.WriteLine("\nRestarting search...");
                     }
                 } while (!searchItem.Equals("done", StringComparison.CurrentCultureIgnoreCase));
@@ -74,13 +75,13 @@ namespace ArrayProblem2
             Console.ReadLine();
         }
 
-        static void fillArray(string[] names)
+        static void FillArray(string[] names)
         {
             int currentSize = 0;
             string name;
             do
             {
-                name = GetSafeString("\nEnter a name: ");
+                name = GetSafeString("\nEnter a name (or zzz to exit): ");
                 // StringComparison.CurrentCultureIgnoreCase performs case insensitive comparison
                 if (!name.Equals("zzz", StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -111,7 +112,7 @@ namespace ArrayProblem2
             return name;
         }
 
-        static void searchArray(string[] names, string searchItem, List<int> indices)
+        static void SearchArray(string[] names, string searchItem, List<int> indices)
         {
             for (int index = 0; index < names.Length; index++)
             {
