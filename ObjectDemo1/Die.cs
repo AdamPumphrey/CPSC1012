@@ -70,7 +70,8 @@ namespace DieClassDemo
 
         public override string ToString()
         {
-            return "Sides = " + Sides + ", FaceValue = " + FaceValue;
+            //return "Sides = " + Sides + ", FaceValue = " + FaceValue;
+            return string.Format("Sides = {0}, FaceValue = {1}", Sides, FaceValue);
         }
     }
 }

@@ -50,6 +50,19 @@ namespace DieClassDemo
             Console.WriteLine("Sides = {0}, FaceValue = {1}", sixSidedDie.Sides, sixSidedDie.FaceValue);
             Console.WriteLine("Sides = {0}, FaceValue = {1}", someDie.Sides, someDie.FaceValue);
 
+            //Exceptions
+            try
+            {
+                sixSidedDie.FaceValue = 7;
+                someDie.Sides = 1;
+            }
+            catch (Exception ex)
+            {
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
             Console.ReadLine();
         }//eom
 
