@@ -129,6 +129,7 @@ namespace CPSC1012_Exercise6_AdamPumphrey
 
         static void SortArray(int[] marks, int start, int end)
         {
+            // wanted to try and implement quicksort - i've done it in python but not in C#
             int temp,
                 first = start,
                 last = end;
