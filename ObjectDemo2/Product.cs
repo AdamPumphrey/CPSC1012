@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ObjectDemo2
 {
-    class Product
+    public class Product
     {
         //private member fields
         private string _name;

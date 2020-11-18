@@ -71,54 +71,54 @@ namespace ObjectDemo2
             //variables and class instances
             //1. As the Product class may throw an exception when we try to create an instance of the class,
             //   we will need to create the instance in a try-catch structure
-            try
-            {
-                //attempt to create an instance
-                name = GetSafeString("Enter product's name: ");
-                price = GetSafeDouble("Enter product's price: ");
-                cost = GetSafeDouble("Enter product's cost: ");
-                quantityOnHand = GetSafeInt("Enter product's QOH: ");
+            //try
+            //{
+            //    //attempt to create an instance
+            //    name = GetSafeString("Enter product's name: ");
+            //    price = GetSafeDouble("Enter product's price: ");
+            //    cost = GetSafeDouble("Enter product's cost: ");
+            //    quantityOnHand = GetSafeInt("Enter product's QOH: ");
 
-                Product product = new Product(name, price, cost, quantityOnHand);
+            //    Product product = new Product(name, price, cost, quantityOnHand);
 
-                Console.WriteLine(product);
-                Console.WriteLine("Inventory cost: {0:0.00}", product.InventoryCost());
-                Console.WriteLine("Inventory price: {0:0.00}", product.InventoryPrice());
+            //    Console.WriteLine(product);
+            //    Console.WriteLine("Inventory cost: {0:0.00}", product.InventoryCost());
+            //    Console.WriteLine("Inventory price: {0:0.00}", product.InventoryPrice());
 
-                Console.WriteLine();
+            //    Console.WriteLine();
 
-                product.Name = "Banana";
-                product.Price = 3;
-                product.Cost = 1.4;
-                product.QuantityOnHand = 10;
-                Console.WriteLine(product);
-                Console.WriteLine("Inventory cost: {0:0.00}", product.InventoryCost());
-                Console.WriteLine("Inventory price: {0:0.00}", product.InventoryPrice());
+            //    product.Name = "Banana";
+            //    product.Price = 3;
+            //    product.Cost = 1.4;
+            //    product.QuantityOnHand = 10;
+            //    Console.WriteLine(product);
+            //    Console.WriteLine("Inventory cost: {0:0.00}", product.InventoryCost());
+            //    Console.WriteLine("Inventory price: {0:0.00}", product.InventoryPrice());
 
-            }//end try
-            catch (Exception ex)
-            {
-                //display the exception thrown from the class
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR: {0}", ex.Message);
-                Console.ForegroundColor = ConsoleColor.Black;
-            }//end catch
+            //}//end try
+            //catch (Exception ex)
+            //{
+            //    //display the exception thrown from the class
+            //    Console.ForegroundColor = ConsoleColor.Red;
+            //    Console.WriteLine("ERROR: {0}", ex.Message);
+            //    Console.ForegroundColor = ConsoleColor.Black;
+            //}//end catch
 
             //2. Create a Store instance and add Product instances to it. Once again, there may be an exception
             //   thrown, thus we need a try-catch structure
             try
             {
                 //2.a Get a name for the store
-
+                name = GetSafeString("Enter the name of the store: ");
                 //2b. Create a collection for the Products
-
+                List<Product> products = new List<Product>();
                 //2c. Call the AddProducts() method to add Product instances to the collection
-
+                AddProducts(products);
                 //2d. Create a Store instance and add the collection of Product instances
-
+                Store store = new Store(name, products);
                 //Console.Clear();
                 //2e. Call the DisplayStore() method of the Store class to display the store
-
+                Console.WriteLine(store.DisplayStore());
             }//end try
             catch (Exception ex)
             {
@@ -132,7 +132,7 @@ namespace ObjectDemo2
         }//eom
 
         #region User Defined Methods
-        static void AddProducts()
+        static void AddProducts(List<Product> products)
         {
             //method scope variables
             char addAnother = 'Y';
@@ -142,20 +142,23 @@ namespace ObjectDemo2
             int quantityOnHand;
             //1. Create a "null" Product; this is used a "place holder" for a Product instance that
             //   will be added to the Products collection
-
+            Product product;
             //2. Loop to add products. Remember there may be an exception, so we need a try-catch
             do
             {
                 try
                 {
                     //3a. Get all the values for the properties of the Product class
-
+                    name = GetSafeString("Product name: ");
+                    price = GetSafeDouble("Product price: ");
+                    cost = GetSafeDouble("Product cost: ");
+                    quantityOnHand = GetSafeInt("Quantity on hand: ");
                     //3.b Create an instance of Product
-
+                    product = new Product(name, price, cost, quantityOnHand);
                     //3c. Add the Product instance to the collection Products
-
+                    products.Add(product);
                     //3d. Prompt to add another Product
-
+                    addAnother = GetSafeChar("Add another product (Y): ");
                 }//end try
                 catch (Exception)
                 {
