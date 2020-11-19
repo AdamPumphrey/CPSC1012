@@ -10,6 +10,7 @@ namespace ObjectDemo2
     {
         //private member fields
         private string _storeName;
+        private List<Product> _products;
         //public accessors & mutators
         public string StoreName
         {
