@@ -76,7 +76,15 @@ namespace CPSC1012_CorePortfolio3_AdamPumphrey
                     break;
 
                 case 3:
-                    LoadFromFile(names, sales);
+                    char userChoice = GetSafeChar("\nWarning, this will delete any unsaved records. Continue?[y/n]: ");
+                    if (userChoice == 'Y')
+                    {
+                        LoadFromFile(names, sales);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Load from file cancelled.");
+                    }
                     break;
 
                 default:
@@ -122,6 +130,8 @@ namespace CPSC1012_CorePortfolio3_AdamPumphrey
         // from exercise 6
         static void LoadFromFile(List<string> names, List<double> sales)
         {
+            names.Clear();
+            sales.Clear();
             // ensure that a .csv file is being used
             string input,
                    filepath = VerifyFile();
@@ -333,6 +343,36 @@ namespace CPSC1012_CorePortfolio3_AdamPumphrey
                 }
             } while (!isValid);
             return name;
+        }
+
+        static char GetSafeChar(string prompt)
+        {
+            bool isValid = false;
+            char character = '.';
+            do
+            {
+                // validate char input
+                try
+                {
+                    Console.Write(prompt);
+                    character = char.Parse(Console.ReadLine().ToUpper());
+                    if (character == 'Y' || character == 'N')
+                    {
+                        isValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid input .. please try again.");
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("\nInvalid input .. please try again.");
+                }
+            } while (!isValid);
+
+            // return valid char input
+            return character;
         }
         #endregion
     }
