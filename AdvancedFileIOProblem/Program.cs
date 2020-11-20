@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 using System.IO;
 using AdvancedFileIOProblem.Classes;
 
+/*
+Purpose:        Write a program to compute course grades based on exam scores and lab marks.
+Input:          file path
+Output:         studentID, quiz mark, midterm mark, lab mark, final exam mark, overall grade
+Written By:     Adam Pumphrey
+Last Modified:  Nov. 20, 2020
+*/
+
 namespace AdvancedFileIOProblem
 {
     class Program
