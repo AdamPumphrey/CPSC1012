@@ -21,6 +21,8 @@ namespace CPSC1012_AdamPumphrey_Exercise7
         {
             List<Product> products = new List<Product>();
 
+            Console.Title = "Exercise 7";
+
             // not sure why AddProduct needed to return the amount of items added
             int count = AddProduct(products);
 
