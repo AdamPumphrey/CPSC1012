@@ -23,18 +23,103 @@ namespace CarClassDemo
         static void Main(string[] args)
         {
             Setup();
+            //1. Set up a try-catch
+            try
+            {
+                Car myCar = CreateCar();
+                Console.WriteLine("\nCar Created");
+                Console.WriteLine(myCar);
+            }
+            catch (Exception ex)
+            {
 
+                Console.WriteLine(ex.Message);
+            }
+
+            Console.ReadLine();
         }//eom
 
         #region Your Methods Go Here
         static Car CreateCar()
         {
-            return null;
+            //1. setup local scope variables
+            string make,
+                   model;
+
+            double size;
+
+            int cylinders,
+                horsepower,
+                gears;
+
+            EngineType engine;
+            TransmissionType transmission;
+            TransmissionType.TypeName type;
+            //2. use the GetSafeString for make and model
+            make = GetSafeString("Enter the make of the car: ");
+            model = GetSafeString("Enter the model of the car: ");
+
+            //3. get values for engine
+            size = GetSafeDouble("Enter the size of the engine in L: ");
+            cylinders = GetSafeInt("Enter the number of cylinders in the engine: ");
+            horsepower = GetSafeInt("Enter the engine's horsepower: ");
+
+            //4. get values for transmission
+            gears = GetSafeInt("Enter the number of gears in the transmission: ");
+            int option = GetTransmissionType();
+            switch (option)
+            {
+                case 1:
+                    type = TransmissionType.TypeName.Automatic;
+                    break;
+
+                case 2:
+                    type = TransmissionType.TypeName.Manual;
+                    break;
+
+                default:
+                    type = TransmissionType.TypeName.CVT;
+                    break;
+            }
+
+            //5. create the car
+            engine = new EngineType(size, horsepower, cylinders);
+            transmission = new TransmissionType(gears, type);
+            Car myCar = new Car(make, model, engine, transmission);
+            return myCar;
         }//end of Createcar
 
         static int GetTransmissionType()
         {
-            return 0;
+            //1. setup some local scope variables
+            int option,
+                enumCount;
+
+            bool isValid = false;
+
+            //2. do loop
+            do
+            {
+                enumCount = 0;
+                //3. create a menu from the enum values
+                foreach (TransmissionType.TypeName type in Enum.GetValues(typeof(TransmissionType.TypeName)))
+                {
+                    enumCount++;
+                    Console.WriteLine("\t{0}. {1}", enumCount, type);
+                }
+
+                //4. get the option using GetSafeInt
+                option = GetSafeInt("Option: ");
+                if (option >= 1 && option <= enumCount)
+                {
+                    isValid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid option");
+                }
+            } while (!isValid);
+            return option;
         }//end of GetTransmissionType
         #endregion
 
