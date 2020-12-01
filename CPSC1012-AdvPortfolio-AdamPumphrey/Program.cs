@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.IO;
 using CPSC1012_AdvPortfolio_AdamPumphrey.Classes;
+using System.Windows.Forms;
 
 /*
 Purpose:        to code a program which creates an invoice for a bicycle sale
@@ -26,7 +27,8 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
                      CarbonPrice = 615,
                      GST = 0.05;
 
-        static void Main(string[] args)
+        // encountered exception when trying to run OpenFileDialog, adding [STAThread] to Main declaration fixed it
+        [STAThread] static void Main(string[] args)
         {
             bool isValid = false;
             int choice;
@@ -355,9 +357,37 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
         static void LoadFromFile(List<Invoice> invoices)
         {
             invoices.Clear();
-            // ensure that a .csv file is being used
+
             string input,
-                   filepath = VerifyFile();
+                   filepath= "";
+
+            bool selection = false;
+
+            do
+            {
+                // use gui to avoid hard coding file path and make it easier for the user vs. typing in full path
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.InitialDirectory = @"c:\";
+                    openFileDialog.Filter = "csv files (*.csv)|*.csv";
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        filepath = openFileDialog.FileName;
+                        selection = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nError: No file selected");
+                        char option = GetSafeChar("Press any letter to retry, or N to return to menu: ");
+                        if (option == 'N')
+                        {
+                            return;
+                        }
+                    }
+                }
+            } while (!selection);
+            
 
             if (File.Exists(filepath))
             {
@@ -435,7 +465,7 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
 
                 reader.Close();
 
-                Console.WriteLine("Process complete.");
+                Console.WriteLine("\tProcess complete.");
             }
             else
             {
@@ -482,8 +512,36 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
         {
             string output;
 
+            bool selection = false;
+
             // ensure that a .csv file is being used/created
-            string filepath = VerifyFile();
+            string filepath = "";
+
+            do
+            {
+                Console.WriteLine("Saving...");
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "csv files (*.csv)|*.csv";
+                    // no need for overwrite warning since we are appending data
+                    saveFileDialog.OverwritePrompt = false;
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        filepath = saveFileDialog.FileName;
+                        selection = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nError: No file selected");
+                        char option = GetSafeChar("Press any key to retry, or N to return to menu: ");
+                        if (option == 'N')
+                        {
+                            return;
+                        }
+                    }
+                }
+            } while (!selection);
 
             StreamWriter writer;
 
@@ -500,8 +558,11 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
 
                 foreach (Invoice invoice in invoices)
                 {
-                    output = invoice.Name + ',' + invoice.Brand + ',' + invoice.Tire + ',' + invoice.Metal + ',' + invoice.Donation;
-                    writer.WriteLine(output);
+                    if (invoice.Name != "")
+                    {
+                        output = invoice.Name + ',' + invoice.Brand + ',' + invoice.Tire + ',' + invoice.Metal + ',' + invoice.Donation;
+                        writer.WriteLine(output);
+                    }
                 }
 
             }
@@ -518,39 +579,7 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
 
             writer.Close();
 
-            Console.WriteLine("Process complete.");
-        }
-
-        // re-used from core portfolio 3
-        static string VerifyFile()
-        {
-            bool isValid = false;
-            string filepath;
-
-            // ensure that a .csv file is being used/created
-            do
-            {
-                filepath = GetSafeString("Enter the file path eg) drive: slash folder slash file.csv: ", true);
-                if (filepath.Length >= 4)
-                {
-                    string extension = filepath.Substring(filepath.Length - 4);
-                    if (!extension.Equals(".csv"))
-                    {
-                        Console.WriteLine("Invalid file type. Please enter a valid file path for a .csv file");
-                    }
-                    else
-                    {
-                        isValid = true;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid file path. Try again");
-                }
-
-            } while (!isValid);
-
-            return filepath;
+            Console.WriteLine("\tProcess complete.");
         }
         #endregion
 

@@ -31,7 +31,6 @@ namespace InheritanceDemo.Classes
         int _idnumber; 
         string _lastname;
         string _firstname;
-        ContactInfo _contact;
 
         public int IDNumber
         {
@@ -81,14 +80,7 @@ namespace InheritanceDemo.Classes
             }
         }
 
-        public ContactInfo Contact
-        {
-            get { return _contact; }
-            set
-            {
-                _contact = value;
-            }
-        }
+        public ContactInfo Contact { get; set; }
 
         public Person(int idnumber, string lastname, string firstname, ContactInfo contact)
         {
