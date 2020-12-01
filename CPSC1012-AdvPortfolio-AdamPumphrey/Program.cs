@@ -365,7 +365,7 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
 
             do
             {
-                // use gui to avoid hard coding file path and make it easier for the user vs. typing in full path
+                // use gui to avoid hard-coding file path and make it easier for the user vs. typing in full path
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
                     openFileDialog.InitialDirectory = @"c:\";
@@ -514,11 +514,11 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
 
             bool selection = false;
 
-            // ensure that a .csv file is being used/created
             string filepath = "";
 
             do
             {
+                // use gui to avoid hard-coding file path and make it easier for the user vs. typing in full path
                 Console.WriteLine("Saving...");
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
