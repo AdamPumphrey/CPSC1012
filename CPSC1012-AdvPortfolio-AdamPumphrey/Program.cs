@@ -12,7 +12,7 @@ Purpose:        to code a program which creates an invoice for a bicycle sale
 Input:          menu choice, name, brand choice, tire size, metal choice, donation, filename (read from/write to)
 Output:         invoice display, all invoices display
 Written By:     Adam Pumphrey
-Last Modified:  Nov. 30, 2020
+Last Modified:  Dec. 3, 2020
 */
 
 namespace CPSC1012_AdvPortfolio_AdamPumphrey
@@ -523,8 +523,6 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
                     saveFileDialog.Filter = "csv files (*.csv)|*.csv";
-                    // no need for overwrite warning since we are appending data
-                    saveFileDialog.OverwritePrompt = false;
 
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
@@ -547,14 +545,13 @@ namespace CPSC1012_AdvPortfolio_AdamPumphrey
 
             try
             {
+                // overwrite file if exists
                 if (File.Exists(filepath))
                 {
-                    writer = File.AppendText(filepath);
+                    File.Delete(filepath);
                 }
-                else
-                {
-                    writer = File.CreateText(filepath);
-                }
+
+                writer = File.CreateText(filepath);
 
                 foreach (Invoice invoice in invoices)
                 {
